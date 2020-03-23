@@ -4,16 +4,13 @@ import {Ingredient} from '../shared/ingredient.model'
 export class RecipeService{
     
     recipeChanged=new Subject<Recipe[]>()
-    private recipes:Recipe[]=[
-        new Recipe(
-            'test recipe','test recipe discription',
-            'https://cdn.pixabay.com/photo/2016/06/15/19/09/food-1459693_1280.jpg',
-            [new Ingredient("apples",5),new Ingredient ("orange",10)],),
-        new Recipe(
-            'test recipe 2','test recipe discription 2',
-            'https://cdn.pixabay.com/photo/2016/06/15/19/09/food-1459693_1280.jpg',
-            [new Ingredient ("banana",10),new Ingredient ("coconut",10)])
-      ]
+    private recipes:Recipe[]=[]
+
+    setRecipe(recipes:Recipe[]){
+        this.recipes=recipes
+        this.recipeChanged.next(this.recipes.slice())
+    }
+
     getRecipe(){
         console.log(this.recipes)
         return this.recipes
