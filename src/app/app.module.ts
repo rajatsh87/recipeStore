@@ -20,6 +20,7 @@ import { FirstComponentComponent } from './recipe/first-component/first-componen
 import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component';
 import { RecipeService } from './recipe/recipe-service';
 import { DataSoratgeService } from './shared/data-storage.service';
+import { AuthComponet } from './auth/auth.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +33,7 @@ import { DataSoratgeService } from './shared/data-storage.service';
     RecipeComponent,
     FirstComponentComponent,
     RecipeEditComponent,
+    AuthComponet
   ],
   imports: [
     BrowserModule,
