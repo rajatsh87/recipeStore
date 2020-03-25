@@ -12,9 +12,9 @@
             <input type="password" id="password" class="form-control" ngModel name="password" required minlength="6">
         </div>
         <div>
-            <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid">{{loginMode?'login':'signUp'}}</button> |
-            <button class="btn btn-primary"
-                (click)="changeMode()">{{loginMode?'switch to signUp':'switch to login'}}</button>
+            <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid">{{isloginMode?'login':'signUp'}}</button> |
+            <button class="btn btn-primary" type="button"
+                (click)="changeMode()">{{isloginMode?'switch to signUp':'switch to login'}}</button>
         </div>
     </form>
 </div>
