@@ -9,10 +9,11 @@ import { FirstComponentComponent } from './recipe/first-component/first-componen
 import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component';
 import { RecipeResolverService } from './recipe/recipes-resolver.service';
 import { AuthComponet } from './auth/auth.component';
+import { AuthGaurdService } from './auth/auth.gard-service';
 const appRoutes:Routes=[
     {path:'',redirectTo:'/recipes',pathMatch:'full'},
-    {path:'recipes',component:RecipeComponent,children:
-        [
+    {path:'recipes',component:RecipeComponent,canActivate:[AuthGaurdService],
+    children:[
             {path:'',component:FirstComponentComponent},
             {path:'new',component:RecipeEditComponent},
             {path:':id',component:RecipeDetailComponent,resolve:[RecipeResolverService]},

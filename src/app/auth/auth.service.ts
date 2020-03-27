@@ -17,6 +17,7 @@ export interface AuthResponseData {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
+    private tokenExpDate:any
     user=new BehaviorSubject<User>(null)
     constructor(private http: HttpClient,private router:Router) { }
     signUp(email, password) {
@@ -34,8 +35,13 @@ export class AuthService {
     }
 
     logout(){
+        
         this.user.next(null)
         this.router.navigate(['/auth'])
+        if(this.tokenExpDate!=null){
+            this.tokenExpDate=null
+        }
+        localStorage.removeItem('userData')
     }
 
     autoLogin(){
@@ -45,21 +51,32 @@ export class AuthService {
             _token:string,
             _tokenExpDate:string
         }=JSON.parse(localStorage.getItem('userData'))
-        const loadedUser=new User(userData.email,
-            userData.id,
-            userData._token,
-            new Date(userData._tokenExpDate))
-        if(loadedUser.token){
-            this.user.next(loadedUser)
-            console.log(loadedUser.email)
-        }
-        else{
-            this.user.next(null)
+        if(userData){
+            const loadedUser=new User(userData.email,
+                userData.id,
+                userData._token,
+                new Date(userData._tokenExpDate))
+            if(loadedUser.token){
+                this.user.next(loadedUser)
+                console.log(loadedUser.email)
+                const expTime=new Date(userData._tokenExpDate).getTime() - new Date().getTime()
+                this.autoLogout(expTime)
+            }
+            else{
+                this.user.next(null)
+            }
+
         }
     }
 
+
+    autoLogout(time:number){
+        console.log("time to auto logout",time)
+        this.tokenExpDate=  setTimeout(this.logout,time)
+    }
+
     login(email, password) {
-        console.log('sending req', password, email)
+        //console.log('sending req', password, email)
         return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD1wCFz1MvV2TBAoADaKqi2o0ZqFEkWT6M'
             , {
                 email: email,
@@ -78,6 +95,7 @@ export class AuthService {
        // console.log(resData.idToken)
         this.user.next(user)
         localStorage.setItem('userData',JSON.stringify(user))
+        this.autoLogout(resData.expiresIn*1000)
     }
 
     private handelError(errorRes: HttpErrorResponse) {
