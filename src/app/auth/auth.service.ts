@@ -18,7 +18,7 @@ export interface AuthResponseData {
 export class AuthService {
 
     private tokenExpDate:any
-    user=new BehaviorSubject<User>(null)
+    user=new BehaviorSubject<User>(null) //it is a subject which provides atleast one value
     constructor(private http: HttpClient,private router:Router) { }
     signUp(email, password) {
         return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD1wCFz1MvV2TBAoADaKqi2o0ZqFEkWT6M',
@@ -27,9 +27,9 @@ export class AuthService {
                 password: password,
                 returnSecureToken: true
             })
-            .pipe(catchError(errorRes => {
+            .pipe(catchError(errorRes => {          //catchError is used to catch error and return as an observable
                 return this.handelError(errorRes)
-            }),tap(resData=>{
+            }),tap(resData=>{                       //this is used to just run code without changeing resData
                 this.handelAuthentication(resData)
             }))
     }
@@ -90,9 +90,8 @@ export class AuthService {
             }))
     }
     private handelAuthentication(resData){
-        const expDate=new Date(new Date().getTime()+ +resData.expiresIn*1000)
+        const expDate=new Date(new Date().getTime()+ +resData.expiresIn*1000) //resData is time in sec 
         const user=new User(resData.email,resData.localId,resData.idToken,expDate)
-       // console.log(resData.idToken)
         this.user.next(user)
         localStorage.setItem('userData',JSON.stringify(user))
         this.autoLogout(resData.expiresIn*1000)

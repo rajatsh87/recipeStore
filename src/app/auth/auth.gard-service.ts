@@ -15,7 +15,7 @@ export class AuthGaurdService implements CanActivate{
                 return true
             }
             else{
-                return this.router.createUrlTree(['auth'])
+                return this.router.createUrlTree(['auth']) //this will re-direct to baseURL/auth
             }
         }))
     }

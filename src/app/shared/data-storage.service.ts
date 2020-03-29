@@ -22,7 +22,6 @@ export class DataSoratgeService {
 
     getRecipes() {
         return this.AuthSer.user.pipe(take(1), exhaustMap(user => {
-          //  console.log("shubham",user.token)
             return this.http.get<Recipe[]>("https://recipebook-69644.firebaseio.com/recipes.json")
         }), map(resData => {
             return resData.map(recipe => {
