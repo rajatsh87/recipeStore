@@ -1,27 +1,9 @@
 
 import { Routes, RouterModule } from '@angular/router';
-import { RecipeComponent } from './recipe/recipe.component';
 import { NgModule } from '@angular/core';
 
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
-import {RecipeDetailComponent} from './recipe/recipe-detail/recipe-detail.component';
-import { FirstComponentComponent } from './recipe/first-component/first-component.component';
-import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component';
-import { RecipeResolverService } from './recipe/recipes-resolver.service';
-import { AuthComponet } from './auth/auth.component';
-import { AuthGaurdService } from './auth/auth.gard-service';
 const appRoutes:Routes=[
-    {path:'',redirectTo:'/recipes',pathMatch:'full'},
-    {path:'recipes',component:RecipeComponent,canActivate:[AuthGaurdService],
-    children:[
-            {path:'',component:FirstComponentComponent},
-            {path:'new',component:RecipeEditComponent},
-            {path:':id',component:RecipeDetailComponent,resolve:[RecipeResolverService]},
-            {path:':id/edit',component:RecipeEditComponent,resolve:[RecipeResolverService]}
-        ]
-    },
-    {path:'shopping-list',component:ShoppingListComponent},
-    {path:'auth',component:AuthComponet}
+    {path:'',redirectTo:'/recipes',pathMatch:'full'}
 ]
 
 @NgModule({

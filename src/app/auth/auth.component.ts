@@ -22,6 +22,9 @@ export class AuthComponet{
         this.isloginMode=!this.isloginMode
        // console.log('loginMode:',this.isloginMode)
     }
+    errorChecked(){
+        this.error=null
+    }
     onSubmit(form:NgForm){
         this.error=null
        // console.log('form submit')
