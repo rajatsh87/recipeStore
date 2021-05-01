@@ -18,6 +18,7 @@ export class RecipeEditComponent implements OnInit {
   edit:boolean=false;
   editRecipeForm:FormGroup;
   recipe:Recipe
+  hideIng:number[]=[]
   ngOnInit() {
     this.recipeService.recipeChanged.subscribe(
       (recipe:Recipe[])=>{
@@ -109,7 +110,13 @@ export class RecipeEditComponent implements OnInit {
   }
 
   deleteIng(ing_id:number){
+    // console.log(ing_id,"recipeId:",this.id)
+    if(!this.id){
+      this.hideIng.push(ing_id)
+    }
+    else
     this.recipeService.deleteIng(ing_id,this.id)
+
   }
 
 }

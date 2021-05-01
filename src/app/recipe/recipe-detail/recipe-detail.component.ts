@@ -35,6 +35,7 @@ dropdownActive=false
   addToShoppingList(){
     const ing=this.recipe.ingredient;
     this.shoppingList.addAllIngredients(ing);
+    this.dropdownActive=!this.dropdownActive
   }
   deleteRecipe(){
     this.recipeService.deleteRecipe(this.id)

@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit,OnDestroy{
         console.log(user)
         this.isAuthenticated= user?true:false
         console.log("authentication",this.isAuthenticated)
+        this.fetch()
       }) 
       
       //this.isAuthenticated=!!this.userSub
